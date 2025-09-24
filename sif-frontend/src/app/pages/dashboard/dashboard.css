@@ -1,0 +1,29 @@
+.dashboard-header {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #dee2e6;
+  margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  color: var(--dark-text);
+}
+
+.dashboard-header p {
+  margin-top: 0.5rem;
+  color: var(--gray-text);
+  font-size: 1.1rem;
+}
+
+.pending-section h2 {
+  color: var(--dark-blue);
+  margin-bottom: 1.5rem;
+}
+
+.loading-message, .no-data-message {
+  text-align: center;
+  padding: 2rem;
+  background-color: var(--white);
+  border-radius: 4px;
+  color: var(--gray-text);
+}

@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+
 import br.com.sif.sif.entity.Paciente;
+import br.com.sif.sif.entity.enums.StatusCadastro;
 
 @Repository
 public interface PacienteRepository extends JpaRepository<Paciente, Long>{
@@ -25,4 +27,5 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long>{
      * @return Uma lista de Pacientes que correspondem ao critério.
      */
     List<Paciente> findByNomeContainingIgnoreCase(String nome);
+    List<Paciente> findByStatusCadastro(StatusCadastro status);
 }

@@ -27,7 +27,7 @@ public class PacienteService {
         if (pacienteExistente.isPresent()) {
             throw new IllegalArgumentException("Já existe um paciente cadastrado com este CPF.");
         }
-        
+
         // Regra de negócio: Definir o status inicial como PRE_CADASTRO
         paciente.setStatusCadastro(StatusCadastro.PRE_CADASTRO);
         return pacienteRepository.save(paciente);
@@ -42,7 +42,7 @@ public class PacienteService {
         if (paciente.getStatusCadastro() != StatusCadastro.PRE_CADASTRO) {
             throw new IllegalStateException("Este cadastro não está pendente de aprovação.");
         }
-        
+
         paciente.setStatusCadastro(StatusCadastro.ATIVO);
         return pacienteRepository.save(paciente);
     }
@@ -57,11 +57,44 @@ public class PacienteService {
     public List<Paciente> listarTodos() {
         return pacienteRepository.findAll();
     }
-    
+
     @Transactional(readOnly = true)
     public Optional<Paciente> buscarPorCpf(String cpf) {
         return pacienteRepository.findByCpf(cpf);
     }
 
-    // Você pode adicionar outros métodos como atualizarPaciente, inativarPaciente, etc.
+    @Transactional
+    public Paciente atualizar(Long id, Paciente pacienteAtualizado) {
+        // Primeiro, busca o paciente existente no banco. O método buscarPorId já lança
+        // uma exceção se não encontrar, o que é perfeito para nós.
+        Paciente pacienteExistente = buscarPorId(id);
+
+        // Copia as propriedades do objeto recebido para o objeto que já existe no
+        // banco.
+        // Não atualizamos o ID, CPF ou o status por este método.
+        pacienteExistente.setNome(pacienteAtualizado.getNome());
+        pacienteExistente.setNomeMae(pacienteAtualizado.getNomeMae());
+        pacienteExistente.setDataNascimento(pacienteAtualizado.getDataNascimento());
+        pacienteExistente.setRg(pacienteAtualizado.getRg());
+        pacienteExistente.setCns(pacienteAtualizado.getCns());
+        pacienteExistente.setEndereco(pacienteAtualizado.getEndereco());
+        pacienteExistente.setTelefone(pacienteAtualizado.getTelefone());
+        pacienteExistente.setPeso(pacienteAtualizado.getPeso());
+        pacienteExistente.setAltura(pacienteAtualizado.getAltura());
+        pacienteExistente.setCor(pacienteAtualizado.getCor());
+
+        // Salva o objeto atualizado. O JPA entende que é uma atualização por causa do
+        // ID.
+        return pacienteRepository.save(pacienteExistente);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Paciente> listarCadastrosPendentes() {
+        return pacienteRepository.findByStatusCadastro(StatusCadastro.PRE_CADASTRO);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Paciente> buscarPorNome(String nome) {
+        return pacienteRepository.findByNomeContainingIgnoreCase(nome);
+    }
 }

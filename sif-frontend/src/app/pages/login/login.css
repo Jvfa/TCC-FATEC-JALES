@@ -1,0 +1,77 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.login-container {
+  background: var(--white);
+  padding: 2.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+h2 {
+  color: var(--dark-blue);
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--gray-text);
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box; /* Garante que o padding não aumente a largura */
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--accent-green);
+  color: var(--white);
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn-submit:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-submit:not(:disabled):hover {
+  background-color: #218838; /* Um verde um pouco mais escuro */
+}
+
+.error-message {
+  margin-top: 1rem;
+  color: var(--danger-red);
+  font-weight: 500;
+}
