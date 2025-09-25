@@ -1,1 +1,49 @@
-<p>paciente-list works!</p>
+<div class="container">
+    <header class="list-header">
+        <h1>Lista de Pacientes</h1>
+        <div class="filter-toolbar">
+            <div class="filter-fields">
+                <input type="text" class="filter-input" placeholder="Nome do Paciente" [(ngModel)]="filtros.nome">
+                <input type="text" class="filter-input" placeholder="CPF" [(ngModel)]="filtros.cpf">
+                <input type="text" class="filter-input" placeholder="Nome da Mãe" [(ngModel)]="filtros.nomeMae">
+            </div>
+            <div class="filter-actions">
+                <button class="btn btn-primary" (click)="buscar()">Buscar</button>
+                <button class="btn btn-secondary" (click)="limparFiltros()">Limpar</button>
+                <button class="btn btn-success" (click)="navegarParaNovoPaciente()">+ Novo Paciente</button>
+            </div>
+        </div>
+    </header>
+
+    <div *ngIf="isLoading" class="loading-message">
+        <p>Carregando...</p>
+    </div>
+
+    <div *ngIf="!isLoading">
+        <div *ngIf="pacientes.length === 0" class="no-data-message">
+            <p>Nenhum paciente encontrado.</p>
+        </div>
+
+        <table class="table" *ngIf="pacientes.length > 0">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let paciente of pacientes">
+                    <td>{{ paciente.nome }}</td>
+                    <td>{{ paciente.cpf }}</td>
+                    <td>{{ paciente.statusCadastro }}</td>
+                    <td class="actions">
+                        <a [routerLink]="['/pacientes', paciente.id]" class="btn btn-primary">Detalhes</a>
+                        <a [routerLink]="['/pacientes', paciente.id, 'editar']" class="btn btn-secondary">Editar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

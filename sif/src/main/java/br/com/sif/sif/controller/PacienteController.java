@@ -1,6 +1,8 @@
 package br.com.sif.sif.controller;
 
+
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,13 +30,8 @@ public class PacienteController {
 
     // GET /api/pacientes
     @GetMapping
-    public ResponseEntity<List<Paciente>> listarPacientes(@RequestParam(required = false) String nome) {
-        List<Paciente> pacientes;
-        if (nome != null && !nome.isEmpty()) {
-            pacientes = pacienteService.buscarPorNome(nome);
-        } else {
-            pacientes = pacienteService.listarTodos();
-        }
+    public ResponseEntity<List<Paciente>> listarPacientes(@RequestParam Map<String, String> filtros) {
+        List<Paciente> pacientes = pacienteService.buscarComFiltros(filtros);
         return ResponseEntity.ok(pacientes);
     }
 

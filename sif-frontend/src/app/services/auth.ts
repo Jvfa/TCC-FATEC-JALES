@@ -8,7 +8,7 @@ import { LoginRequestDTO, LoginResponseDTO } from '../models/auth.model';
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly apiUrl = 'http://localhost:8080/api/auth';
+  private readonly apiUrl = 'http://localhost:8090/api/auth';
   private readonly TOKEN_KEY = 'sif_auth_token';
 
   constructor(private http: HttpClient, private router: Router) { }

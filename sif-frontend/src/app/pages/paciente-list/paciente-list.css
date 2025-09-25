@@ -1,0 +1,73 @@
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Permite que os itens quebrem a linha em telas menores */
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.list-header h1 {
+  margin: 0;
+  color: var(--dark-text);
+}
+
+.toolbar {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.search-input {
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  min-width: 250px;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Estilo adicional para o botão de editar (pode ir no styles.css) */
+.btn-secondary {
+  background-color: var(--gray-text);
+  color: var(--white);
+}
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+/* Adicionar em paciente-list.component.css */
+.filter-toolbar {
+  background-color: var(--white);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.filter-fields {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.filter-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.filter-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+}

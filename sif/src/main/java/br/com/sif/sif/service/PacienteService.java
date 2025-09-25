@@ -1,14 +1,18 @@
 package br.com.sif.sif.service;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import br.com.sif.sif.entity.Paciente;
 import br.com.sif.sif.entity.enums.StatusCadastro;
 import br.com.sif.sif.repository.PacienteRepository;
+import br.com.sif.sif.repository.PacienteSpecification;
 import br.com.sif.sif.service.exception.ResourceNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -97,4 +101,22 @@ public class PacienteService {
     public List<Paciente> buscarPorNome(String nome) {
         return pacienteRepository.findByNomeContainingIgnoreCase(nome);
     }
+
+    // ... outros métodos ...
+    @Transactional(readOnly = true)
+    public List<Paciente> buscarPorDataNascimento(LocalDate data) {
+        return pacienteRepository.findByDataNascimento(data);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Paciente> buscarPorNomeDaMae(String nomeMae) {
+        return pacienteRepository.findByNomeMaeContainingIgnoreCase(nomeMae);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Paciente> buscarComFiltros(Map<String, String> filtros) {
+        Specification<Paciente> spec = PacienteSpecification.comFiltros(filtros);
+        return pacienteRepository.findAll(spec);
+    }
+
 }

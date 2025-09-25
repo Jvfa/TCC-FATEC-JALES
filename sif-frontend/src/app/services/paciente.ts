@@ -7,7 +7,7 @@ import { Paciente } from '../models/paciente.model';
   providedIn: 'root'
 })
 export class PacienteService {
-  private readonly apiUrl = 'http://localhost:8080/api/pacientes';
+  private readonly apiUrl = 'http://localhost:8090/api/pacientes';
 
   constructor(private http: HttpClient) { }
 
@@ -33,5 +33,14 @@ export class PacienteService {
 
   aprovarCadastro(id: number): Observable<Paciente> {
     return this.http.put<Paciente>(`${this.apiUrl}/${id}/aprovar`, {});
+  }
+
+  buscarPacientes(filtros: any): Observable<Paciente[]> {
+    // Constrói os parâmetros de URL, removendo chaves com valores nulos ou vazios
+    const params = Object.entries(filtros)
+      .filter(([key, value]) => value !== null && value !== '')
+      .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+
+    return this.http.get<Paciente[]>(this.apiUrl, { params });
   }
 }

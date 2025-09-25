@@ -1,31 +1,38 @@
 package br.com.sif.sif.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
 
 import br.com.sif.sif.entity.Paciente;
 import br.com.sif.sif.entity.enums.StatusCadastro;
 
 @Repository
-public interface PacienteRepository extends JpaRepository<Paciente, Long>{
+public interface PacienteRepository extends JpaRepository<Paciente, Long>, JpaSpecificationExecutor<Paciente>{
     /**
-     * Busca um paciente pelo seu CPF. Retorna um Optional, pois o paciente pode não existir.
+     * Busca um paciente pelo seu CPF. Retorna um Optional, pois o paciente pode não
+     * existir.
      * O Spring Data JPA cria a query automaticamente a partir do nome do método.
+     * 
      * @param cpf O CPF a ser buscado.
      * @return Um Optional contendo o Paciente, se encontrado.
      */
     Optional<Paciente> findByCpf(String cpf);
 
     /**
-     * Busca pacientes cujo nome contém o texto fornecido, ignorando maiúsculas/minúsculas.
+     * Busca pacientes cujo nome contém o texto fornecido, ignorando
+     * maiúsculas/minúsculas.
      * Útil para a funcionalidade de busca na interface.
+     * 
      * @param nome O texto a ser buscado no nome dos pacientes.
      * @return Uma lista de Pacientes que correspondem ao critério.
      */
     List<Paciente> findByNomeContainingIgnoreCase(String nome);
     List<Paciente> findByStatusCadastro(StatusCadastro status);
+    List<Paciente> findByDataNascimento(LocalDate dataNascimento);
+    List<Paciente> findByNomeMaeContainingIgnoreCase(String nomeMae);
 }

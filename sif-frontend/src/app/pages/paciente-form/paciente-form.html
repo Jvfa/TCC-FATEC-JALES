@@ -1,1 +1,76 @@
-<p>paciente-form works!</p>
+<div class="container">
+  <header class="form-header">
+    <h1>{{ isEditMode ? 'Editar Paciente' : 'Novo Pré-Cadastro de Paciente' }}</h1>
+  </header>
+
+  <form #pacienteForm="ngForm" (ngSubmit)="onSubmit()" class="paciente-form">
+    <div class="form-row">
+      <div class="form-group full-width">
+        <label for="nome">Nome Completo</label>
+        <input type="text" id="nome" name="nome" [(ngModel)]="paciente.nome" class="form-control" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group full-width">
+        <label for="nomeMae">Nome da Mãe</label>
+        <input type="text" id="nomeMae" name="nomeMae" [(ngModel)]="paciente.nomeMae" class="form-control">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="cpf">CPF</label>
+        <input type="text" id="cpf" name="cpf" [(ngModel)]="paciente.cpf" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="rg">RG</label>
+        <input type="text" id="rg" name="rg" [(ngModel)]="paciente.rg" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="cns">CNS</label>
+        <input type="text" id="cns" name="cns" [(ngModel)]="paciente.cns" class="form-control">
+      </div>
+    </div>
+
+    <div class="form-row">
+       <div class="form-group">
+        <label for="dataNascimento">Data de Nascimento</label>
+        <input type="date" id="dataNascimento" name="dataNascimento" [(ngModel)]="paciente.dataNascimento" class="form-control">
+      </div>
+       <div class="form-group">
+        <label for="telefone">Telefone / Celular</label>
+        <input type="text" id="telefone" name="telefone" [(ngModel)]="paciente.telefone" class="form-control">
+      </div>
+       <div class="form-group">
+        <label for="cor">Cor</label>
+        <input type="text" id="cor" name="cor" [(ngModel)]="paciente.cor" class="form-control">
+      </div>
+    </div>
+
+     <div class="form-row">
+      <div class="form-group">
+        <label for="peso">Peso (kg)</label>
+        <input type="number" id="peso" name="peso" [(ngModel)]="paciente.peso" class="form-control">
+      </div>
+       <div class="form-group">
+        <label for="altura">Altura (m)</label>
+        <input type="number" id="altura" name="altura" step="0.01" class="form-control">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group full-width">
+        <label for="endereco">Endereço</label>
+        <input type="text" id="endereco" name="endereco" [(ngModel)]="paciente.endereco" class="form-control">
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-success" [disabled]="!pacienteForm.form.valid">
+        {{ isEditMode ? 'Salvar Alterações' : 'Criar Cadastro' }}
+      </button>
+      <a routerLink="/pacientes" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>
