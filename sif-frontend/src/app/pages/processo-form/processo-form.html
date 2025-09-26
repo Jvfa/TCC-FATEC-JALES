@@ -1,0 +1,72 @@
+<div class="container">
+    <header class="form-header">
+        <h1>Novo Processo de Medicação</h1>
+    </header>
+
+    <form [formGroup]="processoForm" (ngSubmit)="onSubmit()" class="processo-form">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="mesInicioValidade">Mês de Início da Validade</label>
+                <input type="number" id="mesInicioValidade" formControlName="mesInicioValidade" class="form-control"
+                    min="1" max="12">
+            </div>
+            <div class="form-group">
+                <label for="mesFimValidade">Mês de Fim da Validade</label>
+                <input type="number" id="mesFimValidade" formControlName="mesFimValidade" class="form-control" min="1"
+                    max="12">
+            </div>
+            <div class="form-group">
+                <label for="cid">CID</label>
+                <input type="text" id="cid" formControlName="cid" class="form-control">
+            </div>
+        </div>
+        <div class="form-group full-width">
+            <label for="observacoes">Observações</label>
+            <textarea id="observacoes" formControlName="observacoes" class="form-control" rows="3"></textarea>
+        </div>
+
+        <hr>
+        <h3>Medicamentos</h3>
+
+        <div formArrayName="itens">
+            <div *ngFor="let item of itens.controls; let i=index" [formGroupName]="i" class="item-row">
+                <div class="form-group item-medicamento">
+                    <label for="medicamento-{{i}}">Medicamento</label>
+                    <select id="medicamento-{{i}}" formControlName="medicamentoId" class="form-control">
+                        <option value="">Selecione...</option>
+                        <option *ngFor="let med of medicamentosDisponiveis" [value]="med.id">
+                            {{ med.nome }} - {{ med.dosagem }}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group item-quantidade">
+                    <label for="quantidade-{{i}}">Quantidade</label>
+                    <input type="number" id="quantidade-{{i}}" formControlName="quantidade" class="form-control">
+                </div>
+                <div class="item-actions">
+                    <button type="button" (click)="removerItem(i)" class="btn btn-danger"
+                        [disabled]="itens.length === 1">
+                        Remover
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" (click)="adicionarItem()" class="btn btn-secondary">+ Adicionar Medicamento</button>
+
+        <form [formGroup]="processoForm" (ngSubmit)="onSubmit()" class="processo-form">
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-success" [disabled]="processoForm.invalid">
+                    Salvar Processo
+                </button>
+                <a [routerLink]="['/pacientes', pacienteId]" class="btn btn-secondary">Cancelar</a>
+            </div>
+
+        </form>
+
+        <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+        </div>
+    </form>
+</div>

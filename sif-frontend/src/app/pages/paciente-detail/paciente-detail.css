@@ -1,0 +1,75 @@
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #dee2e6;
+  flex-wrap: wrap; /* Para telas menores */
+}
+
+.detail-header h1 {
+  margin: 0;
+  color: var(--dark-text);
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  font-weight: 700;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  color: var(--white);
+  margin-top: 0.5rem;
+}
+
+.status-badge.ATIVO { background-color: var(--accent-green); }
+.status-badge.PRE_CADASTRO { background-color: var(--primary-blue); }
+.status-badge.INATIVO { background-color: var(--gray-text); }
+
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.detail-card {
+  background: var(--white);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.detail-card h3 {
+  margin-top: 0;
+  color: var(--dark-blue);
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+}
+
+.detail-item strong {
+  color: var(--gray-text);
+}
+
+/* Reutilizando estilos globais para botões e tabelas */
+.btn-secondary {
+  background-color: var(--gray-text);
+  color: var(--white);
+}
+.btn-secondary:hover {
+  background-color: #5a6268;
+}

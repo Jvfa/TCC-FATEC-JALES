@@ -1,1 +1,77 @@
-<p>paciente-detail works!</p>
+<div class="container">
+  <div *ngIf="isLoading" class="loading-message">
+    <p>Carregando...</p>
+  </div>
+  <div *ngIf="errorMessage && !isLoading" class="error-message">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <div *ngIf="paciente && !isLoading">
+    <header class="detail-header">
+      <div>
+        <h1>{{ paciente.nome }}</h1>
+        <span class="status-badge" [ngClass]="paciente.statusCadastro">{{ paciente.statusCadastro }}</span>
+      </div>
+      <div class="header-actions">
+        <button *ngIf="paciente.statusCadastro === 'PRE_CADASTRO'" (click)="aprovarCadastro()" class="btn btn-success">
+          Aprovar Cadastro
+        </button>
+        <a [routerLink]="['/pacientes', paciente.id, 'editar']" class="btn btn-primary">Editar</a>
+      </div>
+      <div class="header-actions">
+        <a [routerLink]="['/pacientes', paciente.id, 'processos', 'novo']" class="btn btn-success">
+          + Novo Processo
+        </a>
+        <a [routerLink]="['/pacientes', paciente.id, 'editar']" class="btn btn-primary">Editar</a>
+      </div>
+    </header>
+
+    <div class="details-grid">
+      <div class="detail-card">
+        <h3>Dados Pessoais</h3>
+        <div class="detail-item"><strong>CPF:</strong><span>{{ paciente.cpf }}</span></div>
+        <div class="detail-item"><strong>RG:</strong><span>{{ paciente.rg }}</span></div>
+        <div class="detail-item"><strong>CNS:</strong><span>{{ paciente.cns }}</span></div>
+        <div class="detail-item"><strong>Data de Nascimento:</strong><span>{{ paciente.dataNascimento |
+            date:'dd/MM/yyyy' }}</span></div>
+        <div class="detail-item"><strong>Nome da Mãe:</strong><span>{{ paciente.nomeMae }}</span></div>
+      </div>
+
+      <div class="detail-card">
+        <h3>Contato e Dados Físicos</h3>
+        <div class="detail-item"><strong>Endereço:</strong><span>{{ paciente.endereco }}</span></div>
+        <div class="detail-item"><strong>Telefone:</strong><span>{{ paciente.telefone }}</span></div>
+        <div class="detail-item"><strong>Peso:</strong><span>{{ paciente.peso }} kg</span></div>
+        <div class="detail-item"><strong>Altura:</strong><span>{{ paciente.altura }} m</span></div>
+        <div class="detail-item"><strong>Cor:</strong><span>{{ paciente.cor }}</span></div>
+      </div>
+    </div>
+
+    <div class="detail-card">
+      <h3>Processos de Medicação</h3>
+      <div *ngIf="processos.length > 0; else noProcessos">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID do Processo</th>
+              <th>Status</th>
+              <th>Período de Validade</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let processo of processos">
+              <td>#{{ processo.id }}</td>
+              <td>{{ processo.status }}</td>
+              <td>Mês {{ processo.mesInicioValidade }} a Mês {{ processo.mesFimValidade }}</td>
+              <td><a href="#" class="btn btn-secondary">Ver Processo</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-template #noProcessos>
+        <p>Nenhum processo de medicação encontrado para este paciente.</p>
+      </ng-template>
+    </div>
+  </div>
+</div>

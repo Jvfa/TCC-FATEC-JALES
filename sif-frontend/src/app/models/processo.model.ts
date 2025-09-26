@@ -4,7 +4,8 @@ import { Retirada } from "./retirada.model";
 export interface Processo {
   id: number;
   dataAbertura: string;
-  dataValidade: string;
+  mesInicioValidade: number;
+  mesFimValidade: number;
   cid: string;
   status: 'EM_ABERTO' | 'ENCERRADO' | 'CANCELADO';
   observacoes: string;
@@ -17,7 +18,8 @@ export interface ProcessoRequestDTO {
   pacienteId: number;
   processo: {
     dataAbertura: string;
-    dataValidade: string;
+    mesInicioValidade: number;
+    mesFimValidade: number;
     cid: string;
     observacoes: string;
   };

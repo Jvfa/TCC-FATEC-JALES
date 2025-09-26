@@ -1,0 +1,125 @@
+/* --- Estrutura Geral do Formulário --- */
+.processo-form {
+  background: var(--white);
+  padding: 2.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.form-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.form-header h1 {
+  margin: 0;
+}
+
+/* Organiza os campos em linhas */
+.form-row {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  flex: 1; /* Faz com que os campos dividam o espaço igualmente */
+}
+
+.form-group.full-width {
+  flex-basis: 100%;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--gray-text);
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* --- Seção de Medicamentos (Lista Dinâmica) --- */
+hr {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 2.5rem 0;
+}
+
+h3 {
+  color: var(--dark-blue);
+  margin-bottom: 1.5rem;
+}
+
+/* Estilo para cada linha de medicamento adicionado */
+.item-row {
+  display: flex;
+  align-items: flex-end; /* Alinha os campos pela base */
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.item-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.item-medicamento {
+  flex: 3; /* O campo de seleção de medicamento ocupa mais espaço */
+}
+
+.item-quantidade {
+  flex: 1; /* O campo de quantidade ocupa menos espaço */
+  min-width: 100px;
+}
+
+.item-actions {
+  /* O margin-bottom ajusta a altura do botão para alinhar com os inputs */
+  margin-bottom: 0.8rem;
+}
+
+/* --- Botões de Ação --- */
+.btn-danger {
+  background-color: var(--danger-red);
+  color: var(--white);
+  padding: 0.8rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+.btn-secondary {
+    background-color: var(--gray-text);
+    color: var(--white);
+}
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.form-actions {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eee;
+  display: flex;
+  gap: 1rem;
+}
+
+.error-message {
+  margin-top: 1.5rem;
+  color: var(--danger-red);
+  font-weight: 500;
+  text-align: center;
+}

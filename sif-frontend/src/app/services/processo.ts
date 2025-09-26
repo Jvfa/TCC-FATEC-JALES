@@ -7,7 +7,7 @@ import { Processo, ProcessoRequestDTO } from '../models/processo.model';
   providedIn: 'root'
 })
 export class ProcessoService {
-  private readonly apiUrl = 'http://localhost:8080/api/processos';
+  private readonly apiUrl = 'http://localhost:8090/api/processos';
 
   constructor(private http: HttpClient) { }
 

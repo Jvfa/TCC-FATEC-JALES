@@ -1,0 +1,38 @@
+<div class="container">
+  <header class="list-header">
+    <h1>Gerenciamento de Medicamentos</h1>
+    <button class="btn btn-success" (click)="navegarParaNovo()">+ Novo Medicamento</button>
+  </header>
+
+  <div *ngIf="isLoading" class="loading-message">
+    <p>Carregando...</p>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <div *ngIf="medicamentos.length === 0" class="no-data-message">
+      <p>Nenhum medicamento cadastrado.</p>
+    </div>
+
+    <table class="table" *ngIf="medicamentos.length > 0">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Dosagem</th>
+          <th>Forma Farmacêutica</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let med of medicamentos">
+          <td>{{ med.nome }}</td>
+          <td>{{ med.dosagem }}</td>
+          <td>{{ med.formaFarmaceutica }}</td>
+          <td class="actions">
+            <a [routerLink]="['/medicamentos', med.id, 'editar']" class="btn btn-primary">Editar</a>
+            <button (click)="deletarMedicamento(med.id)" class="btn btn-danger">Deletar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

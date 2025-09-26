@@ -7,7 +7,7 @@ import { Medicamento } from '../models/medicamento.model';
   providedIn: 'root'
 })
 export class MedicamentoService {
-  private readonly apiUrl = 'http://localhost:8080/api/medicamentos';
+  private readonly apiUrl = 'http://localhost:8090/api/medicamentos';
 
   constructor(private http: HttpClient) { }
 
@@ -19,9 +19,6 @@ export class MedicamentoService {
   getMedicamentos(): Observable<Medicamento[]> {
     return this.http.get<Medicamento[]>(this.apiUrl);
   }
-
-  /*
-   // Os métodos abaixo seriam para uma tela de administração de medicamentos
 
    getMedicamentoById(id: number): Observable<Medicamento> {
      return this.http.get<Medicamento>(`${this.apiUrl}/${id}`);
@@ -38,5 +35,4 @@ export class MedicamentoService {
    deletarMedicamento(id: number): Observable<void> {
      return this.http.delete<void>(`${this.apiUrl}/${id}`);
    }
-  */
 }

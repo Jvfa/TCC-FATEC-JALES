@@ -1,0 +1,29 @@
+<div class="container">
+  <header class="form-header">
+    <h1>{{ isEditMode ? 'Editar Medicamento' : 'Cadastrar Novo Medicamento' }}</h1>
+  </header>
+
+  <form #medicamentoForm="ngForm" (ngSubmit)="onSubmit()" class="form-container">
+    <div class="form-group">
+      <label for="nome">Nome do Medicamento</label>
+      <input type="text" id="nome" name="nome" [(ngModel)]="medicamento.nome" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+      <label for="dosagem">Dosagem (ex: 10mg, 500ml)</label>
+      <input type="text" id="dosagem" name="dosagem" [(ngModel)]="medicamento.dosagem" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+      <label for="forma">Forma Farmacêutica (ex: Comprimido, Xarope)</label>
+      <input type="text" id="forma" name="forma" [(ngModel)]="medicamento.formaFarmaceutica" class="form-control" required>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-success" [disabled]="!medicamentoForm.form.valid">
+        {{ isEditMode ? 'Salvar Alterações' : 'Cadastrar' }}
+      </button>
+      <a routerLink="/medicamentos" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>

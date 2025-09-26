@@ -1,6 +1,7 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth';
+import { catchError, throwError } from 'rxjs';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   // Injeta o AuthService para pegar o token
@@ -16,7 +17,17 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       }
     });
     // Passa a requisição clonada (com o header) para a próxima etapa
-    return next(authReq);
+    return next(authReq).pipe(
+      catchError((error: HttpErrorResponse) => {
+        // Se o erro for 403 (Forbidden) ou 401 (Unauthorized),
+        // o token é inválido, então fazemos o logout.
+        if (error.status === 403 || error.status === 401) {
+          console.log("Token inválido ou expirado. Fazendo logout automático.");
+          authService.logout();
+        }
+        return throwError(() => error);
+      })
+    );
   }
 
   // Se não houver token, passa a requisição original sem modificação

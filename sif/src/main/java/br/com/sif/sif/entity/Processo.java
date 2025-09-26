@@ -4,16 +4,6 @@ import java.time.LocalDate;
 import java.util.Set;
 
 import br.com.sif.sif.entity.enums.StatusProcesso;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -30,7 +20,8 @@ public class Processo {
     private Paciente paciente;
 
     private LocalDate dataAbertura;
-    private LocalDate dataValidade;
+    private Integer mesInicioValidade;
+    private Integer mesFimValidade;
     private String cid;
 
     @Enumerated(EnumType.STRING)

@@ -34,4 +34,14 @@ export class AuthService {
   isLoggedIn(): boolean {
     return !!this.getToken(); // Retorna true se o token existir
   }
+
+  getRole(): string | null {
+    const token = this.getToken();
+    if (token) {
+      // Decodifica a parte "payload" do token JWT
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.role;
+    }
+    return null;
+  }
 }

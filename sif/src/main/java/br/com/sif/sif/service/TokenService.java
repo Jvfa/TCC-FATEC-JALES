@@ -21,17 +21,19 @@ public class TokenService {
     private String secret;
 
     public String gerarToken(Usuario usuario) {
-        try {
-            Algorithm algorithm = Algorithm.HMAC256(secret);
-            return JWT.create()
-                    .withIssuer("sif-api")
-                    .withSubject(usuario.getLogin())
-                    .withExpiresAt(genExpirationDate())
-                    .sign(algorithm);
-        } catch (JWTCreationException exception) {
-            throw new RuntimeException("Erro ao gerar token", exception);
-        }
+    try {
+        Algorithm algorithm = Algorithm.HMAC256(secret);
+        return JWT.create()
+                .withIssuer("sif-api")
+                .withSubject(usuario.getLogin())
+                // ADICIONE A LINHA ABAIXO para incluir o perfil
+                .withClaim("role", usuario.getPerfil().name()) 
+                .withExpiresAt(genExpirationDate())
+                .sign(algorithm);
+    } catch (JWTCreationException exception) {
+        throw new RuntimeException("Erro ao gerar token", exception);
     }
+}
 
     public String validateToken(String token) {
         try {

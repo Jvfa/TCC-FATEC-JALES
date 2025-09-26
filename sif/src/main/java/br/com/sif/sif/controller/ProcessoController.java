@@ -4,12 +4,6 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
 import br.com.sif.sif.dto.ProcessoRequestDTO;
@@ -28,13 +22,24 @@ public class ProcessoController {
 
     // POST /api/processos
     @PostMapping
-    public ResponseEntity<Processo> criarNovoProcesso(@RequestBody ProcessoRequestDTO request) {
-        Processo novoProcesso = processoService.criarProcesso(
+     public ResponseEntity<Processo> criarNovoProcesso(@RequestBody ProcessoRequestDTO request) {
+        
+        // 3. Crie a entidade Processo a partir do DTO
+        Processo novoProcesso = new Processo();
+        novoProcesso.setMesInicioValidade(request.processo().mesInicioValidade());
+        novoProcesso.setMesFimValidade(request.processo().mesFimValidade());
+        novoProcesso.setCid(request.processo().cid());
+        novoProcesso.setObservacoes(request.processo().observacoes());
+        novoProcesso.setDataAbertura(request.processo().dataAbertura());
+
+        // 4. Chame o serviço com os dados organizados
+        Processo processoSalvo = processoService.criarProcesso(
             request.pacienteId(),
-            request.processo(),
-            request.itens()
+            novoProcesso,
+            request.itens() // A lista de itens já está no formato correto
         );
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoProcesso);
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(processoSalvo);
     }
     
     // GET /api/processos/{id}

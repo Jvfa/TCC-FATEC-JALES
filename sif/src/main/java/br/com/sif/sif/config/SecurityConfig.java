@@ -1,8 +1,10 @@
 package br.com.sif.sif.config;
 
+import br.com.sif.sif.config.security.SecurityFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod; // IMPORTANTE: Importe o HttpMethod
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -16,8 +18,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import br.com.sif.sif.config.security.SecurityFilter;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -26,8 +26,33 @@ public class SecurityConfig {
     private SecurityFilter securityFilter;
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .cors(Customizer.withDefaults())
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(req -> {
+                    // --- Regras Públicas ---
+                    req.requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll();
+
+                    // --- Regras de Administrador / Farmacêutico ---
+                    req.requestMatchers("/api/medicamentos/**").hasAnyRole("ADMINISTRADOR", "FARMACEUTICO");
+
+                    // --- Regras para QUALQUER usuário autenticado ---
+                    // Permite que qualquer usuário logado crie, edite ou delete pacientes e processos.
+                    req.requestMatchers(HttpMethod.POST, "/api/pacientes", "/api/processos").authenticated();
+                    req.requestMatchers(HttpMethod.PUT, "/api/pacientes/**").authenticated();
+                    
+                    // Permite que qualquer usuário logado veja os dados (requisições GET)
+                    // Esta regra agora cobre explicitamente os GETs que estavam falhando.
+                    req.requestMatchers(HttpMethod.GET, "/api/pacientes/**", "/api/processos/**").authenticated();
+
+                    // Qualquer outra requisição que não foi mencionada acima precisa de autenticação.
+                    // Isso serve como uma regra de segurança "pega-tudo".
+                    req.anyRequest().authenticated();
+                })
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 
     @Bean
@@ -36,33 +61,19 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .cors(Customizer.withDefaults())
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(req -> {
-                    req.requestMatchers("/api/auth/login").permitAll();
-                    req.anyRequest().authenticated();
-                })
-                // ADICIONAR O NOSSO FILTRO ANTES DO FILTRO PADRÃO
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
-
-    /**
-     * 2. Este Bean define as regras de CORS para toda a aplicação.
-     * É a forma mais robusta e recomendada.
-     */
+    
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**") // Aplica a todas as rotas /api
-                        .allowedOrigins("http://localhost:4200") // Permite a origem do Angular
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Métodos permitidos
-                        .allowedHeaders("*"); // Permite todos os cabeçalhos (headers)
+                registry.addMapping("/api/**")
+                        .allowedOrigins("http://localhost:4200")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*");
             }
         };
     }
