@@ -1,35 +1,27 @@
 package br.com.sif.sif.entity;
 
-import java.time.LocalDate;
-
 import br.com.sif.sif.entity.enums.StatusCadastro;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import java.time.LocalDate;
 import java.util.Set;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "pacientes")
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = "processos") // Excluímos 'processos' para evitar o loop
 public class Paciente {
+    // ... todos os seus campos continuam os mesmos ...
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
     private String nome;
-    
     private String nomeMae;
     private LocalDate dataNascimento;
-    
     @Column(unique = true)
     private String cpf;
     private String rg;
@@ -39,11 +31,9 @@ public class Paciente {
     private Double peso;
     private Double altura;
     private String cor;
-
     @Enumerated(EnumType.STRING)
     private StatusCadastro statusCadastro;
-
-    // Um paciente pode ter vários processos
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference // Lado "pai": será serializado
     private Set<Processo> processos;
 }

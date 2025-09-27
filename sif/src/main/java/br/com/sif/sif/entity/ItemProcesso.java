@@ -1,32 +1,28 @@
 package br.com.sif.sif.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.Data;
-
+import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "processo_medicamentos")
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = "processo") // Excluímos o relacionamento de volta para Processo
 public class ItemProcesso {
+    // ... todos os seus campos continuam os mesmos ...
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(nullable = false)
+    private Integer quantidade;
     @ManyToOne
     @JoinColumn(name = "processo_id")
+    @JsonBackReference // Lado "filho"
     private Processo processo;
-
     @ManyToOne
     @JoinColumn(name = "medicamento_id")
     private Medicamento medicamento;
-
-    @Column(nullable = false)
-    private Integer quantidade;
 }

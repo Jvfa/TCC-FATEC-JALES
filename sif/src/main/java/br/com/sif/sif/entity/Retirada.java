@@ -2,18 +2,22 @@ package br.com.sif.sif.entity;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Table(name = "retiradas")
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = {"processo", "atendente"})
 public class Retirada {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +25,12 @@ public class Retirada {
 
     @ManyToOne
     @JoinColumn(name = "processo_id", nullable = false)
+    @JsonBackReference // Lado "filho"
     private Processo processo;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
+    @JsonBackReference // Lado "filho"
     private Usuario atendente;
 
     private LocalDate dataRetirada;

@@ -11,11 +11,16 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Table(name = "usuarios")
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = "retiradasRealizadas")
 public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +41,7 @@ public class Usuario implements UserDetails {
 
     // Um usuário (atendente) pode realizar várias retiradas
     @OneToMany(mappedBy = "atendente")
+    @JsonManagedReference // Lado "pai"
     private Set<Retirada> retiradasRealizadas;
 
     // --- Métodos da Interface UserDetails ---
