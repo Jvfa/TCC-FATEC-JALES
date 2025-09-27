@@ -20,7 +20,7 @@ public class ItemProcesso {
     private Integer quantidade;
     @ManyToOne
     @JoinColumn(name = "processo_id")
-    @JsonBackReference // Lado "filho"
+    @JsonBackReference("processo-itens") // Use o mesmo nome do "pai"
     private Processo processo;
     @ManyToOne
     @JoinColumn(name = "medicamento_id")

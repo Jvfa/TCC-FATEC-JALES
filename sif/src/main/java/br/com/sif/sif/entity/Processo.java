@@ -30,14 +30,14 @@ public class Processo {
     private String observacoes;
     @ManyToOne
     @JoinColumn(name = "paciente_id", nullable = false)
-    @JsonBackReference // Lado "filho": será omitido para quebrar o loop
+    @JsonBackReference("paciente-processos") // Use o mesmo nome do "pai"
     private Paciente paciente;
 
     @OneToMany(mappedBy = "processo", cascade = CascadeType.ALL)
-    @JsonManagedReference // Lado "pai" da relação com ItemProcesso
+    @JsonManagedReference("processo-itens") // Novo nome para esta relação
     private Set<ItemProcesso> itensMedicamentos;
 
     @OneToMany(mappedBy = "processo", cascade = CascadeType.ALL)
-    @JsonManagedReference // Lado "pai" da relação com Retirada
+    @JsonManagedReference("processo-retiradas") // Novo nome para esta relação
     private Set<Retirada> retiradas;
 }

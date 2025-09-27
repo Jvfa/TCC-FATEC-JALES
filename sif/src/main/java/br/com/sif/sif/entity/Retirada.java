@@ -25,12 +25,12 @@ public class Retirada {
 
     @ManyToOne
     @JoinColumn(name = "processo_id", nullable = false)
-    @JsonBackReference // Lado "filho"
+    @JsonBackReference("processo-retiradas") // Use o mesmo nome do "pai"
     private Processo processo;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
-    @JsonBackReference // Lado "filho"
+    @JsonBackReference("usuario-retiradas") // Use o mesmo nome do "pai"
     private Usuario atendente;
 
     private LocalDate dataRetirada;

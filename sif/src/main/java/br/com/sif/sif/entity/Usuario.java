@@ -41,7 +41,7 @@ public class Usuario implements UserDetails {
 
     // Um usuário (atendente) pode realizar várias retiradas
     @OneToMany(mappedBy = "atendente")
-    @JsonManagedReference // Lado "pai"
+    @JsonManagedReference("usuario-retiradas") // Novo nome para esta relação
     private Set<Retirada> retiradasRealizadas;
 
     // --- Métodos da Interface UserDetails ---

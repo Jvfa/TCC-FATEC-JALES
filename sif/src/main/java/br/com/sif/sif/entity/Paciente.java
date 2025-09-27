@@ -34,6 +34,6 @@ public class Paciente {
     @Enumerated(EnumType.STRING)
     private StatusCadastro statusCadastro;
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference // Lado "pai": será serializado
+    @JsonManagedReference("paciente-processos") // Adicione um nome aqui
     private Set<Processo> processos;
 }
