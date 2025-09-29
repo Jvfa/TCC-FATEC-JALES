@@ -53,6 +53,14 @@ body {
   background-color: #218838;
 }
 
+.btn-warning {
+  background-color: #ffc107;
+  color: #212529;
+}
+.btn-warning:hover {
+  background-color: #e0a800;
+}
+
 /* --- TABELAS --- */
 .table {
   width: 100%;

@@ -22,4 +22,8 @@ export class ProcessoService {
   criarProcesso(request: ProcessoRequestDTO): Observable<Processo> {
     return this.http.post<Processo>(this.apiUrl, request);
   }
+  marcarComoVencido(id: number): Observable<Processo> {
+    // O corpo da requisição PUT é vazio ({}) pois toda a informação está na URL
+    return this.http.put<Processo>(`${this.apiUrl}/${id}/vencer`, {});
+  }
 }

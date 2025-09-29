@@ -21,7 +21,7 @@ import br.com.sif.sif.service.exception.ResourceNotFoundException;
 
 @Service
 public class ProcessoService {
-    
+
     private final ProcessoRepository processoRepository;
     private final PacienteRepository pacienteRepository;
     private final MedicamentoRepository medicamentoRepository;
@@ -85,6 +85,21 @@ public class ProcessoService {
         return processoRepository.findByPacienteId(pacienteId);
     }
 
-    // Você pode adicionar outros métodos como fecharProcesso, cancelarProcesso,
-    // etc.
+    @Transactional
+    public Processo marcarComoVencido(Long id) {
+        // Busca o processo no banco de dados
+        Processo processo = buscarPorId(id);
+
+        // Regra de negócio: só podemos marcar como vencido um processo que está em
+        // aberto
+        if (processo.getStatus() != StatusProcesso.EM_ABERTO) {
+            throw new IllegalStateException("Apenas processos em aberto podem ser marcados como vencidos.");
+        }
+
+        // Altera o status
+        processo.setStatus(StatusProcesso.VENCIDO);
+
+        // Salva a alteração no banco
+        return processoRepository.save(processo);
+    }
 }

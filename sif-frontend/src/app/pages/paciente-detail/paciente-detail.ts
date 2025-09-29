@@ -23,7 +23,7 @@ export class PacienteDetail implements OnInit {
     private route: ActivatedRoute,
     private pacienteService: PacienteService,
     private processoService: ProcessoService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
@@ -75,6 +75,24 @@ export class PacienteDetail implements OnInit {
         },
         error: (err) => {
           alert('Falha ao aprovar o cadastro.');
+          console.error(err);
+        }
+      });
+    }
+  }
+
+  marcarProcessoComoVencido(processoId: number): void {
+    if (confirm('Tem certeza que deseja marcar este processo como VENCIDO? Esta ação não pode ser desfeita.')) {
+      this.processoService.marcarComoVencido(processoId).subscribe({
+        next: () => {
+          alert('Processo marcado como VENCIDO com sucesso!');
+          // Recarrega a lista de processos para exibir o status atualizado
+          if (this.paciente && this.paciente.id) {
+            this.carregarProcessos(this.paciente.id);
+          }
+        },
+        error: (err) => {
+          alert('Falha ao marcar processo como vencido.');
           console.error(err);
         }
       });

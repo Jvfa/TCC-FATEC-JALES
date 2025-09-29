@@ -22,8 +22,8 @@ public class ProcessoController {
 
     // POST /api/processos
     @PostMapping
-     public ResponseEntity<Processo> criarNovoProcesso(@RequestBody ProcessoRequestDTO request) {
-        
+    public ResponseEntity<Processo> criarNovoProcesso(@RequestBody ProcessoRequestDTO request) {
+
         // 3. Crie a entidade Processo a partir do DTO
         Processo novoProcesso = new Processo();
         novoProcesso.setMesInicioValidade(request.processo().mesInicioValidade());
@@ -34,14 +34,14 @@ public class ProcessoController {
 
         // 4. Chame o serviço com os dados organizados
         Processo processoSalvo = processoService.criarProcesso(
-            request.pacienteId(),
-            novoProcesso,
-            request.itens() // A lista de itens já está no formato correto
+                request.pacienteId(),
+                novoProcesso,
+                request.itens() // A lista de itens já está no formato correto
         );
-        
+
         return ResponseEntity.status(HttpStatus.CREATED).body(processoSalvo);
     }
-    
+
     // GET /api/processos/{id}
     @GetMapping("/{id}")
     public ResponseEntity<Processo> buscarProcessoPorId(@PathVariable Long id) {
@@ -54,6 +54,12 @@ public class ProcessoController {
     public ResponseEntity<List<Processo>> buscarProcessosDoPaciente(@PathVariable Long pacienteId) {
         List<Processo> processos = processoService.buscarProcessosPorPaciente(pacienteId);
         return ResponseEntity.ok(processos);
+    }
+
+    @PutMapping("/{id}/vencer") // Endpoint: PUT /api/processos/{id}/vencer
+    public ResponseEntity<Processo> marcarComoVencido(@PathVariable Long id) {
+        Processo processoAtualizado = processoService.marcarComoVencido(id);
+        return ResponseEntity.ok(processoAtualizado);
     }
 
 }

@@ -16,7 +16,6 @@
         <button *ngIf="paciente.statusCadastro === 'PRE_CADASTRO'" (click)="aprovarCadastro()" class="btn btn-success">
           Aprovar Cadastro
         </button>
-        <a [routerLink]="['/pacientes', paciente.id, 'editar']" class="btn btn-primary">Editar</a>
       </div>
       <div class="header-actions">
         <a [routerLink]="['/pacientes', paciente.id, 'processos', 'novo']" class="btn btn-success">
@@ -64,7 +63,12 @@
               <td>#{{ processo.id }}</td>
               <td>{{ processo.status }}</td>
               <td>Mês {{ processo.mesInicioValidade }} a Mês {{ processo.mesFimValidade }}</td>
-              <td><a [routerLink]="['/processos', processo.id]" class="btn btn-secondary">Ver Processo</a></td>
+              <td><a [routerLink]="['/processos', processo.id]" class="btn btn-secondary" style="margin-right: 10px;">Ver Processo</a>
+                <button
+                  *ngIf="processo.status === 'EM_ABERTO'" (click)="marcarProcessoComoVencido(processo.id)"
+                  class="btn btn-warning">
+                  Marcar Vencido
+                </button></td>
             </tr>
           </tbody>
         </table>
