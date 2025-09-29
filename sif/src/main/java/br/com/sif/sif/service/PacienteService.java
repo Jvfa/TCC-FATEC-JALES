@@ -3,6 +3,7 @@ package br.com.sif.sif.service;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import br.com.sif.sif.dto.PacienteUpdateDTO;
 import br.com.sif.sif.entity.Paciente;
 import br.com.sif.sif.entity.enums.StatusCadastro;
 import br.com.sif.sif.repository.PacienteRepository;
@@ -68,27 +69,21 @@ public class PacienteService {
     }
 
     @Transactional
-    public Paciente atualizar(Long id, Paciente pacienteAtualizado) {
-        // Primeiro, busca o paciente existente no banco. O método buscarPorId já lança
-        // uma exceção se não encontrar, o que é perfeito para nós.
+    public Paciente atualizar(Long id, PacienteUpdateDTO dto) {
         Paciente pacienteExistente = buscarPorId(id);
 
-        // Copia as propriedades do objeto recebido para o objeto que já existe no
-        // banco.
-        // Não atualizamos o ID, CPF ou o status por este método.
-        pacienteExistente.setNome(pacienteAtualizado.getNome());
-        pacienteExistente.setNomeMae(pacienteAtualizado.getNomeMae());
-        pacienteExistente.setDataNascimento(pacienteAtualizado.getDataNascimento());
-        pacienteExistente.setRg(pacienteAtualizado.getRg());
-        pacienteExistente.setCns(pacienteAtualizado.getCns());
-        pacienteExistente.setEndereco(pacienteAtualizado.getEndereco());
-        pacienteExistente.setTelefone(pacienteAtualizado.getTelefone());
-        pacienteExistente.setPeso(pacienteAtualizado.getPeso());
-        pacienteExistente.setAltura(pacienteAtualizado.getAltura());
-        pacienteExistente.setCor(pacienteAtualizado.getCor());
+        // Copia os dados do DTO para a entidade gerenciada pelo JPA
+        pacienteExistente.setNome(dto.nome());
+        pacienteExistente.setNomeMae(dto.nomeMae());
+        pacienteExistente.setDataNascimento(dto.dataNascimento());
+        pacienteExistente.setRg(dto.rg());
+        pacienteExistente.setCns(dto.cns());
+        pacienteExistente.setEndereco(dto.endereco());
+        pacienteExistente.setTelefone(dto.telefone());
+        pacienteExistente.setPeso(dto.peso());
+        pacienteExistente.setAltura(dto.altura());
+        pacienteExistente.setCor(dto.cor());
 
-        // Salva o objeto atualizado. O JPA entende que é uma atualização por causa do
-        // ID.
         return pacienteRepository.save(pacienteExistente);
     }
 

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Paciente } from '../../models/paciente.model';
 import { PacienteService } from '../../services/paciente';
+import { PacienteUpdateDTO } from '../../models/paciente-update.dto';
 
 @Component({
   selector: 'app-paciente-form',
@@ -21,7 +22,7 @@ export class PacienteForm implements OnInit {
     private pacienteService: PacienteService,
     private router: Router,
     private route: ActivatedRoute // Para ler o ID da URL
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -36,14 +37,51 @@ export class PacienteForm implements OnInit {
 
   onSubmit(): void {
     if (this.isEditMode && this.pacienteId) {
-      this.pacienteService.atualizarPaciente(this.pacienteId, this.paciente).subscribe(() => {
+      // Lógica de ATUALIZAÇÃO (que já está funcionando)
+      const updateDto: PacienteUpdateDTO = {
+        nome: this.paciente.nome,
+        nomeMae: this.paciente.nomeMae,
+        dataNascimento: this.paciente.dataNascimento,
+        rg: this.paciente.rg,
+        cns: this.paciente.cns,
+        endereco: this.paciente.endereco,
+        telefone: this.paciente.telefone,
+        peso: this.paciente.peso,
+        altura: this.paciente.altura,
+        cor: this.paciente.cor
+      };
+      this.pacienteService.atualizarPaciente(this.pacienteId, updateDto).subscribe(() => {
         alert('Paciente atualizado com sucesso!');
         this.router.navigate(['/pacientes']);
       });
+
     } else {
-      this.pacienteService.criarPreCadastro(this.paciente).subscribe(() => {
-        alert('Pré-cadastro realizado com sucesso!');
-        this.router.navigate(['/pacientes']);
+      // LÓGICA DE CRIAÇÃO (CORRIGIDA)
+      // Criamos um novo objeto 'createData' apenas com os campos do formulário,
+      // garantindo que não enviamos 'id' ou 'statusCadastro' acidentalmente.
+      const createData = {
+        nome: this.paciente.nome,
+        nomeMae: this.paciente.nomeMae,
+        dataNascimento: this.paciente.dataNascimento,
+        cpf: this.paciente.cpf, // CPF é necessário na criação
+        rg: this.paciente.rg,
+        cns: this.paciente.cns,
+        endereco: this.paciente.endereco,
+        telefone: this.paciente.telefone,
+        peso: this.paciente.peso,
+        altura: this.paciente.altura,
+        cor: this.paciente.cor
+      };
+
+      this.pacienteService.criarPreCadastro(createData).subscribe({
+        next: () => {
+          alert('Pré-cadastro realizado com sucesso!');
+          this.router.navigate(['/pacientes']);
+        },
+        error: (err) => {
+          console.error('Erro ao criar pré-cadastro', err);
+          // Você pode adicionar uma mensagem de erro para o usuário aqui
+        }
       });
     }
   }

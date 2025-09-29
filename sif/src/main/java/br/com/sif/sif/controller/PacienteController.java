@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import br.com.sif.sif.dto.PacienteUpdateDTO;
 import br.com.sif.sif.entity.Paciente;
 import br.com.sif.sif.service.PacienteService;
 
@@ -50,10 +51,10 @@ public class PacienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Paciente> atualizarPaciente(@PathVariable Long id, @RequestBody Paciente paciente) {
-        Paciente pacienteAtualizado = pacienteService.atualizar(id, paciente);
-        return ResponseEntity.ok(pacienteAtualizado);
-    }
+public ResponseEntity<Paciente> atualizar(@PathVariable Long id, @RequestBody PacienteUpdateDTO dto) {
+    Paciente pacienteAtualizado = pacienteService.atualizar(id, dto);
+    return ResponseEntity.ok(pacienteAtualizado);
+}
 
     @GetMapping("/pendentes")
     public ResponseEntity<List<Paciente>> getCadastrosPendentes() {

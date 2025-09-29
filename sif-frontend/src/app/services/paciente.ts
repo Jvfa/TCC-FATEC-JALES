@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Paciente } from '../models/paciente.model';
+import { PacienteUpdateDTO } from '../models/paciente-update.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -23,12 +24,12 @@ export class PacienteService {
     return this.http.get<Paciente[]>(`${this.apiUrl}/pendentes`);
   }
 
-  criarPreCadastro(paciente: Omit<Paciente, 'id' | 'statusCadastro'>): Observable<Paciente> {
-    return this.http.post<Paciente>(this.apiUrl, paciente);
+  criarPreCadastro(pacienteData: Partial<Paciente>): Observable<Paciente> {
+    return this.http.post<Paciente>(this.apiUrl, pacienteData);
   }
 
-  atualizarPaciente(id: number, paciente: Paciente): Observable<Paciente> {
-    return this.http.put<Paciente>(`${this.apiUrl}/${id}`, paciente);
+  atualizarPaciente(id: number, dto: PacienteUpdateDTO): Observable<Paciente> {
+    return this.http.put<Paciente>(`${this.apiUrl}/${id}`, dto);
   }
 
   aprovarCadastro(id: number): Observable<Paciente> {
