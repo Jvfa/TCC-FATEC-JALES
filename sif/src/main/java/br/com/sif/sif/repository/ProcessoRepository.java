@@ -15,7 +15,7 @@ public interface ProcessoRepository extends JpaRepository<Processo, Long>{
      * @param pacienteId O ID do paciente.
      * @return Uma lista de seus Processos.
      */
-    List<Processo> findByPacienteId(Long pacienteId);
+    List<Processo> findByPaciente_Id(Long pacienteId);
 
     /**
      * Busca todos os processos que correspondem a um status específico.

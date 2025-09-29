@@ -8,6 +8,7 @@
 
     <div *ngIf="processo && !isLoading">
         <header class="detail-header">
+            <a [routerLink]="['/pacientes', processo.pacienteId]" class="btn btn-back">&larr; Voltar para o Paciente</a>
             <div>
                 <h1>Detalhes do Processo #{{ processo.id }}</h1>
                 <span class="status-badge" [ngClass]="processo.status">{{ processo.status }}</span>

@@ -61,6 +61,25 @@ body {
   background-color: #e0a800;
 }
 
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: var(--gray-text);
+  text-decoration: none;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-back:hover {
+  background-color: #e9ecef;
+  color: var(--dark-text);
+}
+
 /* --- TABELAS --- */
 .table {
   width: 100%;

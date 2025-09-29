@@ -82,7 +82,11 @@ public class ProcessoService {
 
     @Transactional(readOnly = true)
     public List<Processo> buscarProcessosPorPaciente(Long pacienteId) {
-        return processoRepository.findByPacienteId(pacienteId);
+        // ANTES:
+        // return processoRepository.findByPacienteId(pacienteId);
+
+        // DEPOIS (CORRIGIDO):
+        return processoRepository.findByPaciente_Id(pacienteId);
     }
 
     @Transactional

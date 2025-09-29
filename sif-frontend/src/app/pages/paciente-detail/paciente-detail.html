@@ -8,6 +8,7 @@
 
   <div *ngIf="paciente && !isLoading">
     <header class="detail-header">
+      <a routerLink="/pacientes" class="btn btn-back">&larr; Voltar para a Lista</a>
       <div>
         <h1>{{ paciente.nome }}</h1>
         <span class="status-badge" [ngClass]="paciente.statusCadastro">{{ paciente.statusCadastro }}</span>

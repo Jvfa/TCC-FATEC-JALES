@@ -1,7 +1,8 @@
 <div class="container">
     <header class="form-header">
-        <h1>Novo Processo de Medicação</h1>
-    </header>
+    <a [routerLink]="['/pacientes', pacienteId]" class="btn btn-back">&larr; Voltar para o Paciente</a>
+    <h1>Novo Processo de Medicação</h1>
+  </header>
 
     <form [formGroup]="processoForm" (ngSubmit)="onSubmit()" class="processo-form">
         <div class="form-row">

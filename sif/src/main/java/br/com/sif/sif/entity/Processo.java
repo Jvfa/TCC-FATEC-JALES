@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "processos")
@@ -40,4 +41,9 @@ public class Processo {
     @OneToMany(mappedBy = "processo", cascade = CascadeType.ALL)
     @JsonManagedReference("processo-retiradas") // Novo nome para esta relação
     private Set<Retirada> retiradas;
+
+    @JsonProperty("pacienteId")
+    public Long getPacienteId() {
+        return paciente != null ? paciente.getId() : null;
+    }
 }

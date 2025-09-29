@@ -49,3 +49,9 @@
 .form-group.full-width {
   flex-basis: 100%;
 }
+
+.form-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #dee2e6;
+}

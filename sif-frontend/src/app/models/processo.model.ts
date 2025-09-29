@@ -11,6 +11,7 @@ export interface Processo {
   observacoes: string;
   itensMedicamentos: ItemProcesso[];
   retiradas: Retirada[];
+  pacienteId?: number;
 }
 
 // DTO para a requisição de criação de processo
