@@ -11,6 +11,7 @@ import { ProcessoForm } from './pages/processo-form/processo-form';
 import { MedicamentoList } from './pages/medicamento-list/medicamento-list';
 import { MedicamentoForm } from './pages/medicamento-form/medicamento-form';
 import { roleGuard } from './guards/role-guard';
+import { ProcessoDetail } from './pages/processo-detail/processo-detail';
 
 export const routes: Routes = [
     // Rotas de Autenticação e Dashboard
@@ -56,6 +57,8 @@ export const routes: Routes = [
         canActivate: [roleGuard],
         data: { roles: ['ADMINISTRADOR', 'FARMACEUTICO'] }
     },
+
+    { path: 'processos/:id', component: ProcessoDetail }, 
 
 
     // --- ROTAS PADRÃO E DE ERRO ---

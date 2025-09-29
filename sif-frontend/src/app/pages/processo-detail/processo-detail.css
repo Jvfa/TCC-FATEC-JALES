@@ -1,0 +1,77 @@
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.detail-header h1 {
+  margin: 0;
+  color: var(--dark-text);
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  font-weight: 700;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  color: var(--white);
+  margin-top: 0.5rem;
+}
+
+.status-badge.EM_ABERTO { background-color: var(--accent-green); }
+.status-badge.ENCERRADO { background-color: var(--gray-text); }
+.status-badge.CANCELADO { background-color: var(--danger-red); }
+
+.detail-card {
+  background: var(--white);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+}
+
+.detail-card h3 {
+  margin-top: 0;
+  color: var(--dark-blue);
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+}
+
+.detail-item strong {
+  color: var(--gray-text);
+}
+
+.retirada-form {
+  border: 2px solid var(--primary-blue);
+}
+
+.retirada-form .form-row {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.retirada-form .form-group {
+  flex: 1;
+}
+
+.retirada-form .form-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}

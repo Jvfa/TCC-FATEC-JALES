@@ -11,7 +11,6 @@ export interface Retirada {
 // DTO para a requisição de criação de retirada
 export interface RetiradaRequestDTO {
   processoId: number;
-  atendenteId: number;
   nomeRetirou: string;
   quantidade: number;
 }

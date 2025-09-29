@@ -21,7 +21,8 @@ public class RetiradaService {
     private final ProcessoRepository processoRepository;
     private final UsuarioRepository usuarioRepository;
 
-    public RetiradaService(RetiradaRepository retiradaRepository, ProcessoRepository processoRepository, UsuarioRepository usuarioRepository) {
+    public RetiradaService(RetiradaRepository retiradaRepository, ProcessoRepository processoRepository,
+            UsuarioRepository usuarioRepository) {
         this.retiradaRepository = retiradaRepository;
         this.processoRepository = processoRepository;
         this.usuarioRepository = usuarioRepository;
@@ -34,28 +35,23 @@ public class RetiradaService {
      * garantindo a consistência dos dados.
      */
     @Transactional
-    public Retirada registrarRetirada(Long processoId, Long atendenteId, String nomeRetirou, Integer quantidade) {
-        // 1. Busca as entidades necessárias
+    public Retirada registrarRetirada(Long processoId, Usuario atendente, String nomeRetirou, Integer quantidade) {
         Processo processo = processoRepository.findById(processoId)
                 .orElseThrow(() -> new ResourceNotFoundException("Processo não encontrado com o ID: " + processoId));
 
-        Usuario atendente = usuarioRepository.findById(atendenteId)
-                .orElseThrow(() -> new ResourceNotFoundException("Atendente não encontrado com o ID: " + atendenteId));
-
-        // 2. Aplica as regras de negócio
+        // Não precisamos mais buscar o atendente, ele já foi fornecido
         if (processo.getStatus() != StatusProcesso.EM_ABERTO) {
-            throw new IllegalStateException("Não é possível registrar retirada para um processo que não está em aberto.");
+            throw new IllegalStateException(
+                    "Não é possível registrar retirada para um processo que não está em aberto.");
         }
-        
-        // 3. Cria e preenche a nova entidade de Retirada
+
         Retirada novaRetirada = new Retirada();
         novaRetirada.setProcesso(processo);
-        novaRetirada.setAtendente(atendente);
+        novaRetirada.setAtendente(atendente); // Usa o objeto recebido diretamente
         novaRetirada.setDataRetirada(LocalDate.now());
         novaRetirada.setNomeRetirou(nomeRetirou);
         novaRetirada.setQuantidadeDispensada(quantidade);
 
-        // 4. Salva a nova retirada no banco de dados
         return retiradaRepository.save(novaRetirada);
     }
 }

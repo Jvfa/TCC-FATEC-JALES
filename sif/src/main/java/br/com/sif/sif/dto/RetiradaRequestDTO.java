@@ -1,6 +1,7 @@
 package br.com.sif.sif.dto;
 
-public record RetiradaRequestDTO(Long processoId,
-    Long atendenteId,
+public record RetiradaRequestDTO(
+    Long processoId,
     String nomeRetirou,
-    Integer quantidade) {}
+    Integer quantidade
+) {}

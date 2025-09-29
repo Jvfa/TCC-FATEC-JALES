@@ -7,7 +7,7 @@ import { Retirada, RetiradaRequestDTO } from '../models/retirada.model';
   providedIn: 'root'
 })
 export class RetiradaService {
-  private readonly apiUrl = 'http://localhost:8080/api/retiradas';
+  private readonly apiUrl = 'http://localhost:8090/api/retiradas';
 
   constructor(private http: HttpClient) { }
 

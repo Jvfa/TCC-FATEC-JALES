@@ -64,7 +64,7 @@
               <td>#{{ processo.id }}</td>
               <td>{{ processo.status }}</td>
               <td>Mês {{ processo.mesInicioValidade }} a Mês {{ processo.mesFimValidade }}</td>
-              <td><a href="#" class="btn btn-secondary">Ver Processo</a></td>
+              <td><a [routerLink]="['/processos', processo.id]" class="btn btn-secondary">Ver Processo</a></td>
             </tr>
           </tbody>
         </table>

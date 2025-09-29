@@ -1,0 +1,103 @@
+<div class="container">
+    <div *ngIf="isLoading" class="loading-message">
+        <p>Carregando dados do processo...</p>
+    </div>
+    <div *ngIf="errorMessage && !isLoading" class="error-message">
+        <p>{{ errorMessage }}</p>
+    </div>
+
+    <div *ngIf="processo && !isLoading">
+        <header class="detail-header">
+            <div>
+                <h1>Detalhes do Processo #{{ processo.id }}</h1>
+                <span class="status-badge" [ngClass]="processo.status">{{ processo.status }}</span>
+            </div>
+            <div class="header-actions">
+                <button *ngIf="processo.status === 'EM_ABERTO'"
+                    (click)="exibirFormularioRetirada = !exibirFormularioRetirada" class="btn btn-success">
+                    + Registrar Retirada
+                </button>
+            </div>
+        </header>
+
+        <div class="detail-card">
+            <h3>Informações Gerais</h3>
+            <div class="detail-item"><strong>Período de Validade:</strong><span>Mês {{ processo.mesInicioValidade }} a
+                    Mês {{ processo.mesFimValidade }}</span></div>
+            <div class="detail-item"><strong>CID:</strong><span>{{ processo.cid }}</span></div>
+            <div class="detail-item"><strong>Observações:</strong><span>{{ processo.observacoes || 'Nenhuma' }}</span>
+            </div>
+        </div>
+
+        <div class="detail-card">
+            <h3>Medicamentos do Processo</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Medicamento</th>
+                        <th>Dosagem</th>
+                        <th>Quantidade no Processo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of processo.itensMedicamentos">
+                        <td>{{ item.medicamento.nome }}</td>
+                        <td>{{ item.medicamento.dosagem }}</td>
+                        <td>{{ item.quantidade }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="detail-card">
+
+            <div *ngIf="exibirFormularioRetirada" class="detail-card retirada-form">
+                <h3>Registrar Nova Retirada</h3>
+                <form #formRetirada="ngForm" (ngSubmit)="registrarRetirada()">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nomeRetirou">Nome de Quem Retirou</label>
+                            <input type="text" id="nomeRetirou" name="nomeRetirou" class="form-control"
+                                [(ngModel)]="novaRetirada.nomeRetirou" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantidade">Quantidade</label>
+                            <input type="number" id="quantidade" name="quantidade" class="form-control"
+                                [(ngModel)]="novaRetirada.quantidade" min="1" required>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" [disabled]="formRetirada.invalid">Confirmar
+                            Retirada</button>
+                        <button type="button" (click)="exibirFormularioRetirada = false"
+                            class="btn btn-secondary">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+            <h3>Histórico de Retiradas</h3>
+            <div *ngIf="processo.retiradas.length > 0; else noRetiradas">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Data da Retirada</th>
+                            <th>Retirado Por</th>
+                            <th>Atendente Responsável</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let retirada of processo.retiradas">
+                            <td>{{ retirada.dataRetirada | date:'dd/MM/yyyy' }}</td>
+                            <td>{{ retirada.nomeRetirou }}</td>
+                            <td>{{ retirada.atendente.nome }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <ng-template #noRetiradas>
+                <p>Nenhuma retirada registrada para este processo.</p>
+            </ng-template>
+        </div>
+    </div>
+</div>
