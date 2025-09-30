@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder; // Importe
 
 @SpringBootApplication
 @AutoConfigureAfter(FlywayAutoConfiguration.class)
-public class SifApplication implements CommandLineRunner { // Adicione "implements CommandLineRunner"
+public class SifApplication { // Adicione "implements CommandLineRunner"
 
     @Autowired
     private PasswordEncoder passwordEncoder; // Injete o codificador de senhas
@@ -19,15 +19,5 @@ public class SifApplication implements CommandLineRunner { // Adicione "implemen
         SpringApplication.run(SifApplication.class, args);
     }
 
-    // Adicione este método
-    @Override
-    public void run(String... args) throws Exception {
-        // Este código irá rodar uma vez na inicialização
-        String encodedPassword = passwordEncoder.encode("admin");
-        System.out.println("\n\n\n========================= GERADOR DE HASH BCrypt =========================");
-        System.out.println("O hash para a senha 'admin' neste ambiente é:");
-        System.out.println(encodedPassword);
-        System.out.println("COPIE A LINHA ACIMA E COLE NO SEU ARQUIVO V2__insert-default-admin-user.sql");
-        System.out.println("==========================================================================\n\n\n");
-    }
+
 }

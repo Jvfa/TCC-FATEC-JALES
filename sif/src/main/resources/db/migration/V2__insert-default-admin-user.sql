@@ -1,2 +1,2 @@
 INSERT INTO usuarios (nome, login, senha, perfil)
-VALUES ('Administrador', 'admin', '$2a$10$.0Ar1WzApNQiXuYukA8vB.AuTaxd8xAzqr7yHkaPTfD1AEHg9Thj.', 'ADMINISTRADOR');
+VALUES ('Administrador', 'admin', '$2a$10$xC/LhQXanjT/LWcUSaKKpez9rrrzmW.VQ6Zns9Yy1IneecErwc0JK', 'ADMINISTRADOR');
