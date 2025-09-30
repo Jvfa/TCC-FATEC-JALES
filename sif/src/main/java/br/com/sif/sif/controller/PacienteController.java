@@ -1,6 +1,5 @@
 package br.com.sif.sif.controller;
 
-
 import java.util.List;
 import java.util.Map;
 
@@ -8,9 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import br.com.sif.sif.dto.PacienteCreateDTO;
 import br.com.sif.sif.dto.PacienteUpdateDTO;
 import br.com.sif.sif.entity.Paciente;
 import br.com.sif.sif.service.PacienteService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/pacientes")
@@ -24,8 +25,9 @@ public class PacienteController {
 
     // POST /api/pacientes
     @PostMapping
-    public ResponseEntity<Paciente> criarPreCadastro(@RequestBody Paciente paciente) {
-        Paciente novoPaciente = pacienteService.criarPreCadastro(paciente);
+    public ResponseEntity<Paciente> criarPreCadastro(@Valid @RequestBody PacienteCreateDTO dto) {
+        // A lógica no service precisará ser ajustada para receber o DTO
+        Paciente novoPaciente = pacienteService.criarPreCadastro(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoPaciente);
     }
 
@@ -51,10 +53,10 @@ public class PacienteController {
     }
 
     @PutMapping("/{id}")
-public ResponseEntity<Paciente> atualizar(@PathVariable Long id, @RequestBody PacienteUpdateDTO dto) {
-    Paciente pacienteAtualizado = pacienteService.atualizar(id, dto);
-    return ResponseEntity.ok(pacienteAtualizado);
-}
+    public ResponseEntity<Paciente> atualizar(@PathVariable Long id, @Valid @RequestBody PacienteUpdateDTO dto) {
+        Paciente pacienteAtualizado = pacienteService.atualizar(id, dto);
+        return ResponseEntity.ok(pacienteAtualizado);
+    }
 
     @GetMapping("/pendentes")
     public ResponseEntity<List<Paciente>> getCadastrosPendentes() {

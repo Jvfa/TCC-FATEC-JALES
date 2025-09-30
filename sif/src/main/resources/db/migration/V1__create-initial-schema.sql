@@ -43,7 +43,6 @@ CREATE TABLE processos (
     status VARCHAR(255),
     observacoes TEXT,
     CONSTRAINT fk_processos_pacientes FOREIGN KEY (paciente_id) REFERENCES pacientes(id),
-    -- RESTRIÇÃO CORRIGIDA, INCLUINDO 'VENCIDO'
     CONSTRAINT processos_status_check CHECK (status IN ('EM_ABERTO', 'ENCERRADO', 'CANCELADO', 'VENCIDO'))
 );
 

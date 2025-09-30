@@ -5,11 +5,12 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Paciente } from '../../models/paciente.model';
 import { PacienteService } from '../../services/paciente';
 import { PacienteUpdateDTO } from '../../models/paciente-update.dto';
+import { NgxMaskDirective } from 'ngx-mask'; 
 
 @Component({
   selector: 'app-paciente-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, NgxMaskDirective],
   templateUrl: './paciente-form.html',
   styleUrl: './paciente-form.css'
 })

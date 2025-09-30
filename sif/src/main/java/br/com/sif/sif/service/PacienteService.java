@@ -3,6 +3,7 @@ package br.com.sif.sif.service;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import br.com.sif.sif.dto.PacienteCreateDTO;
 import br.com.sif.sif.dto.PacienteUpdateDTO;
 import br.com.sif.sif.entity.Paciente;
 import br.com.sif.sif.entity.enums.StatusCadastro;
@@ -26,16 +27,35 @@ public class PacienteService {
     }
 
     @Transactional
-    public Paciente criarPreCadastro(Paciente paciente) {
-        // Regra de negócio: Verificar se o CPF já existe
-        Optional<Paciente> pacienteExistente = pacienteRepository.findByCpf(paciente.getCpf());
-        if (pacienteExistente.isPresent()) {
+    // 2. Altere a assinatura do método para receber o DTO
+    public Paciente criarPreCadastro(PacienteCreateDTO dto) {
+
+        // (Opcional, mas recomendado) Manter a regra de negócio para não duplicar CPF
+        if (pacienteRepository.findByCpf(dto.cpf()).isPresent()) {
             throw new IllegalArgumentException("Já existe um paciente cadastrado com este CPF.");
         }
 
-        // Regra de negócio: Definir o status inicial como PRE_CADASTRO
-        paciente.setStatusCadastro(StatusCadastro.PRE_CADASTRO);
-        return pacienteRepository.save(paciente);
+        // 3. Crie uma nova instância da ENTIDADE Paciente
+        Paciente novoPaciente = new Paciente();
+
+        // 4. Copie os dados do DTO (que veio da requisição) para a Entidade
+        novoPaciente.setNome(dto.nome());
+        novoPaciente.setNomeMae(dto.nomeMae());
+        novoPaciente.setDataNascimento(dto.dataNascimento());
+        novoPaciente.setCpf(dto.cpf());
+        novoPaciente.setRg(dto.rg());
+        novoPaciente.setCns(dto.cns());
+        novoPaciente.setEndereco(dto.endereco());
+        novoPaciente.setTelefone(dto.telefone());
+        novoPaciente.setPeso(dto.peso());
+        novoPaciente.setAltura(dto.altura());
+        novoPaciente.setCor(dto.cor());
+
+        // 5. Defina os campos que são controlados pelo backend e não pelo usuário
+        novoPaciente.setStatusCadastro(StatusCadastro.PRE_CADASTRO);
+
+        // 6. Salve a ENTIDADE (e não o DTO) no banco de dados
+        return pacienteRepository.save(novoPaciente);
     }
 
     @Transactional
