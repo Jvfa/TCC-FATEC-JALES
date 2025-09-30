@@ -21,6 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(exclude = "retiradasRealizadas")
+@Table(name = "usuarios")
 public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
