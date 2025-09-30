@@ -98,4 +98,11 @@ export class PacienteDetail implements OnInit {
       });
     }
   }
+  getMedicamentosNomes(processo: Processo): string {
+    if (!processo.itensMedicamentos || processo.itensMedicamentos.length === 0) {
+      return 'Nenhum medicamento associado';
+    }
+    // O 'map' extrai apenas o nome de cada item, e o 'join' os une com uma vírgula e espaço.
+    return processo.itensMedicamentos.map(item => item.medicamento.nome).join(', ');
+  }
 }

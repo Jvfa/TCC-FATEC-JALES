@@ -76,12 +76,37 @@
       </div>
     </div>
 
+    <hr>
     <div class="form-row">
-      <div class="form-group full-width">
-        <label for="endereco">Endereço</label>
-        <input type="text" id="endereco" name="endereco" [(ngModel)]="paciente.endereco" class="form-control">
+      <div class="form-group">
+        <label for="cep">CEP</label>
+        <input type="text" id="cep" name="cep" [(ngModel)]="paciente.cep" class="form-control" mask="00000-000">
+      </div>
+      <div class="form-group" style="flex: 2;"> <label for="cidade">Cidade</label>
+        <input type="text" id="cidade" name="cidade" [(ngModel)]="paciente.cidade" class="form-control">
       </div>
     </div>
+    <div class="form-row">
+      <div class="form-group" style="flex: 2;">
+        <label for="bairro">Bairro</label>
+        <input type="text" id="bairro" name="bairro" [(ngModel)]="paciente.bairro" class="form-control">
+      </div>
+      <div class="form-group" style="flex: 3;">
+        <label for="rua">Rua / Logradouro</label>
+        <input type="text" id="rua" name="rua" [(ngModel)]="paciente.rua" class="form-control">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="numero">Número</label>
+        <input type="text" id="numero" name="numero" [(ngModel)]="paciente.numero" class="form-control">
+      </div>
+      <div class="form-group" style="flex: 2;">
+        <label for="complemento">Complemento (opcional)</label>
+        <input type="text" id="complemento" name="complemento" [(ngModel)]="paciente.complemento" class="form-control">
+      </div>
+    </div>
+    <hr>
 
     <div class="form-actions">
       <button type="submit" class="btn btn-success" [disabled]="!pacienteForm.form.valid">

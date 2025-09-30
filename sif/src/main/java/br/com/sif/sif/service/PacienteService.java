@@ -45,7 +45,12 @@ public class PacienteService {
         novoPaciente.setCpf(dto.cpf());
         novoPaciente.setRg(dto.rg());
         novoPaciente.setCns(dto.cns());
-        novoPaciente.setEndereco(dto.endereco());
+        novoPaciente.setCep(dto.cep());
+        novoPaciente.setCidade(dto.cidade());
+        novoPaciente.setBairro(dto.bairro());
+        novoPaciente.setRua(dto.rua());
+        novoPaciente.setNumero(dto.numero());
+        novoPaciente.setComplemento(dto.complemento());
         novoPaciente.setTelefone(dto.telefone());
         novoPaciente.setPeso(dto.peso());
         novoPaciente.setAltura(dto.altura());
@@ -98,7 +103,12 @@ public class PacienteService {
         pacienteExistente.setDataNascimento(dto.dataNascimento());
         pacienteExistente.setRg(dto.rg());
         pacienteExistente.setCns(dto.cns());
-        pacienteExistente.setEndereco(dto.endereco());
+        pacienteExistente.setCep(dto.cep());
+        pacienteExistente.setCidade(dto.cidade());
+        pacienteExistente.setBairro(dto.bairro());
+        pacienteExistente.setRua(dto.rua());
+        pacienteExistente.setNumero(dto.numero());
+        pacienteExistente.setComplemento(dto.complemento());
         pacienteExistente.setTelefone(dto.telefone());
         pacienteExistente.setPeso(dto.peso());
         pacienteExistente.setAltura(dto.altura());

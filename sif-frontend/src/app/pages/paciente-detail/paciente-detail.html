@@ -39,7 +39,17 @@
 
       <div class="detail-card">
         <h3>Contato e Dados Físicos</h3>
-        <div class="detail-item"><strong>Endereço:</strong><span>{{ paciente.endereco }}</span></div>
+        <div class="detail-item">
+          <strong>Endereço:</strong>
+          <span>
+            {{ paciente.rua || 'N/A' }}, {{ paciente.numero || 'S/N' }} - {{ paciente.bairro || 'N/A' }}, {{
+            paciente.cidade || 'N/A' }} - CEP: {{ paciente.cep || 'N/A' }}
+          </span>
+        </div>
+        <div class="detail-item">
+          <strong>Complemento:</strong>
+          <span>{{ paciente.complemento || 'Nenhum' }}</span>
+        </div>
         <div class="detail-item"><strong>Telefone:</strong><span>{{ paciente.telefone }}</span></div>
         <div class="detail-item"><strong>Peso:</strong><span>{{ paciente.peso }} kg</span></div>
         <div class="detail-item"><strong>Altura:</strong><span>{{ paciente.altura }} m</span></div>
@@ -55,6 +65,7 @@
             <tr>
               <th>ID do Processo</th>
               <th>Status</th>
+              <th>Medicamentos</th>
               <th>Período de Validade</th>
               <th>Ações</th>
             </tr>
@@ -63,13 +74,15 @@
             <tr *ngFor="let processo of processos">
               <td>#{{ processo.id }}</td>
               <td>{{ processo.status }}</td>
+              <td>{{ getMedicamentosNomes(processo) }}</td>
               <td>Mês {{ processo.mesInicioValidade }} a Mês {{ processo.mesFimValidade }}</td>
-              <td><a [routerLink]="['/processos', processo.id]" class="btn btn-secondary" style="margin-right: 10px;">Ver Processo</a>
-                <button
-                  *ngIf="processo.status === 'EM_ABERTO'" (click)="marcarProcessoComoVencido(processo.id)"
+              <td><a [routerLink]="['/processos', processo.id]" class="btn btn-secondary"
+                  style="margin-right: 10px;">Ver Processo</a>
+                <button *ngIf="processo.status === 'EM_ABERTO'" (click)="marcarProcessoComoVencido(processo.id)"
                   class="btn btn-warning">
                   Marcar Vencido
-                </button></td>
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>

@@ -26,7 +26,12 @@ public class Paciente {
     private String cpf;
     private String rg;
     private String cns;
-    private String endereco;
+    private String cep;
+    private String cidade;
+    private String bairro;
+    private String rua;
+    private String numero;
+    private String complemento;
     private String telefone;
     private Double peso;
     private Double altura;

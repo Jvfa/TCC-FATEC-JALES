@@ -12,56 +12,44 @@ import { MedicamentoList } from './pages/medicamento-list/medicamento-list';
 import { MedicamentoForm } from './pages/medicamento-form/medicamento-form';
 import { roleGuard } from './guards/role-guard';
 import { ProcessoDetail } from './pages/processo-detail/processo-detail';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-    // Rotas de Autenticação e Dashboard
-    { path: 'login', component: Login },
-    { path: 'dashboard', component: Dashboard },
+  // A rota de login não é protegida
+  { path: 'login', component: Login },
 
-    // --- ROTAS DE PACIENTES (ORDEM CORRIGIDA) ---
+  // --- ROTAS PROTEGIDAS PELO LOGIN ---
+  { path: 'dashboard', component: Dashboard, canActivate: [authGuard] },
+  { path: 'pacientes', component: PacienteList, canActivate: [authGuard] },
+  { path: 'pacientes/novo', component: PacienteForm, canActivate: [authGuard] },
+  { path: 'pacientes/:id', component: PacienteDetail, canActivate: [authGuard] },
+  { path: 'pacientes/:id/editar', component: PacienteForm, canActivate: [authGuard] },
+  { path: 'processos/:id', component: ProcessoDetail, canActivate: [authGuard] },
+  { path: 'pacientes/:pacienteId/processos/novo', component: ProcessoForm, canActivate: [authGuard] },
+  
+  // --- ROTAS PROTEGIDAS PELO LOGIN E PELO PERFIL ---
+  {
+    path: 'medicamentos',
+    component: MedicamentoList,
+    canActivate: [authGuard, roleGuard], // Adicionamos os dois guardas
+    data: { roles: ['ADMINISTRADOR', 'FARMACEUTICO'] }
+  },
+  {
+    path: 'medicamentos/novo',
+    component: MedicamentoForm,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMINISTRADOR', 'FARMACEUTICO'] }
+  },
+  {
+    path: 'medicamentos/:id/editar',
+    component: MedicamentoForm,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMINISTRADOR', 'FARMACEUTICO'] }
+  },
 
-    // Rota para a lista principal
-    { path: 'pacientes', component: PacienteList },
-
-    // Rota mais específica: 'novo' vem antes de ':id'
-    { path: 'pacientes/novo', component: PacienteForm },
-
-    // Rota mais longa e específica: vem antes da rota mais genérica de edição
-    { path: 'pacientes/:pacienteId/processos/novo', component: ProcessoForm },
-
-    // Rota mais longa: editar um paciente específico
-    { path: 'pacientes/:id/editar', component: PacienteForm },
-
-    // Rota mais genérica com parâmetro: por último no grupo de pacientes
-    { path: 'pacientes/:id', component: PacienteDetail },
-
-    { path: 'medicamentos', component: MedicamentoList },
-    { path: 'medicamentos/novo', component: MedicamentoForm },
-    { path: 'medicamentos/:id/editar', component: MedicamentoForm },
-
-    {
-        path: 'medicamentos',
-        component: MedicamentoList,
-        canActivate: [roleGuard], // Aplica o guarda
-        data: { roles: ['ADMINISTRADOR', 'FARMACEUTICO'] } // Define os perfis permitidos
-    },
-    {
-        path: 'medicamentos/novo',
-        component: MedicamentoForm,
-        canActivate: [roleGuard],
-        data: { roles: ['ADMINISTRADOR', 'FARMACEUTICO'] }
-    },
-    {
-        path: 'medicamentos/:id/editar',
-        component: MedicamentoForm,
-        canActivate: [roleGuard],
-        data: { roles: ['ADMINISTRADOR', 'FARMACEUTICO'] }
-    },
-
-    { path: 'processos/:id', component: ProcessoDetail }, 
-
-
-    // --- ROTAS PADRÃO E DE ERRO ---
-    { path: '', redirectTo: '/login', pathMatch: 'full' },
-    { path: '**', component: NotFound } // Rota "Coringa" sempre por último
+  // --- ROTAS PADRÃO E DE ERRO ---
+  // A rota vazia agora redireciona para o dashboard (o guarda cuidará do resto)
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  // A rota coringa sempre por último
+  { path: '**', component: NotFound }
 ];

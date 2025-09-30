@@ -17,8 +17,14 @@ public record PacienteCreateDTO(
 
     String rg,
     String cns,
-    String endereco,
     String telefone,
+
+    String cep,
+    String cidade,
+    String bairro,
+    String rua,
+    String numero,
+    String complemento,
     
     @DecimalMin(value = "1.0", message = "O peso deve ser no mínimo 1.0 kg")
     @DecimalMax(value = "500.0", message = "O peso não pode exceder 500.0 kg")

@@ -7,7 +7,7 @@ CREATE TABLE usuarios (
     perfil VARCHAR(255) NOT NULL
 );
 
--- Criação da tabela de pacientes
+-- Criação da tabela de pacientes com endereço estruturado e tipos numéricos corrigidos
 CREATE TABLE pacientes (
     id BIGSERIAL PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
@@ -16,12 +16,18 @@ CREATE TABLE pacientes (
     cpf VARCHAR(255) UNIQUE,
     rg VARCHAR(255),
     cns VARCHAR(255),
-    endereco VARCHAR(255),
     telefone VARCHAR(255),
-    peso NUMERIC(5, 2),
-    altura NUMERIC(3, 2),
+    peso NUMERIC(6, 2), -- Corrigido para maior precisão
+    altura NUMERIC(4, 2), -- Corrigido para maior precisão
     cor VARCHAR(255),
-    status_cadastro VARCHAR(255)
+    status_cadastro VARCHAR(255),
+    -- Novos campos de endereço
+    cep VARCHAR(10),
+    cidade VARCHAR(100),
+    bairro VARCHAR(100),
+    rua VARCHAR(255),
+    numero VARCHAR(20),
+    complemento VARCHAR(100)
 );
 
 -- Criação da tabela de medicamentos
@@ -32,7 +38,7 @@ CREATE TABLE medicamentos (
     forma_farmaceutica VARCHAR(255)
 );
 
--- Criação da tabela de processos
+-- Criação da tabela de processos com período de validade em meses e status 'VENCIDO'
 CREATE TABLE processos (
     id BIGSERIAL PRIMARY KEY,
     paciente_id BIGINT NOT NULL,

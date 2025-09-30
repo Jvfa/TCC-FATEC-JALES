@@ -4,7 +4,12 @@ export interface PacienteUpdateDTO {
   dataNascimento: string;
   rg: string;
   cns: string;
-  endereco: string;
+  cep: string;
+  cidade: string;
+  bairro: string;
+  rua: string;
+  numero: string;
+  complemento: string;
   telefone: string;
   peso: number;
   altura: number;
