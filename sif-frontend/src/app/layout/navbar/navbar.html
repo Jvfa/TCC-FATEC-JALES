@@ -4,12 +4,12 @@
   </div>
   <ul class="navbar-links">
     <li><a routerLink="/pacientes">Pacientes</a></li>
+    
+    <li><a routerLink="/ocr-upload">Cadastro por OCR</a></li>
 
     <li *ngIf="authService.getRole() === 'ADMINISTRADOR' || authService.getRole() === 'FARMACEUTICO'">
       <a routerLink="/medicamentos">Medicamentos</a>
     </li>
-
     <li><a (click)="logout()" class="logout-link">Sair</a></li>
   </ul>
-
 </nav>

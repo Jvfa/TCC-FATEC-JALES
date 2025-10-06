@@ -1,0 +1,94 @@
+<div class="container">
+    <h1>Cadastro de Paciente por OCR</h1>
+    <p>Faça o upload de uma imagem da ficha do paciente para preencher o formulário automaticamente.</p>
+
+    <div class="ocr-layout">
+        <div class="ocr-column">
+            <h3>1. Selecione a Imagem</h3>
+            <input type="file" (change)="onFileSelected($event)" accept="image/*">
+
+            <button (click)="analisarImagem()" [disabled]="!imagemSelecionada || isLoading" class="btn btn-primary">
+                {{ isLoading ? 'Analisando...' : 'Analisar Imagem' }}
+            </button>
+
+            <div *ngIf="previewUrl" class="image-preview">
+                <h4>Preview da Imagem:</h4>
+                <img [src]="previewUrl" alt="Preview da Ficha">
+            </div>
+        </div>
+
+        <div class.="ocr-column">
+            <h3>2. Valide os Dados</h3>
+
+            <div *ngIf="isLoading" class.="loading-message">
+                <p>Extraindo dados da imagem. Isso pode levar um momento...</p>
+            </div>
+
+            <div *ngIf="dadosExtraidos && !isLoading" class="validation-form">
+                <p>Revise os dados extraídos e corrija se necessário antes de salvar.</p>
+
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" [(ngModel)]="paciente.nome" id="nome" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="nomeMae">Nome da Mãe</label>
+                    <input type="text" [(ngModel)]="paciente.nomeMae" id="nomeMae" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="dataNascimento">Data de Nascimento</label>
+                    <input type="date" [(ngModel)]="paciente.dataNascimento" id="dataNascimento" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="cpf">CPF</label>
+                    <input type="text" [(ngModel)]="paciente.cpf" id="cpf" class="form-control" mask="000.000.000-00">
+                </div>
+                <div class="form-group">
+                    <label for="rg">RG</label>
+                    <input type="text" [(ngModel)]="paciente.rg" id="rg" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="cns">CNS</label>
+                    <input type="text" [(ngModel)]="paciente.cns" id="cns" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="telefone">Telefone</label>
+                    <input type="text" [(ngModel)]="paciente.telefone" id="telefone" class="form-control"
+                        mask="(00) 0000-0000||(00) 0 0000-0000">
+                </div>
+                <div class="form-group">
+                    <label for="peso">Peso (kg)</label>
+                    <input type="number" [(ngModel)]="paciente.peso" id="peso" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="altura">Altura (m)</label>
+                    <input type="number" [(ngModel)]="paciente.altura" id="altura" class="form-control" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="cor">Cor</label>
+                    <input type="text" [(ngModel)]="paciente.cor" id="cor" class="form-control">
+                </div>
+                <hr>
+                <p><strong>Endereço (revise e separe os campos)</strong></p>
+                <div class="form-group">
+                    <label for="rua">Rua / Logradouro</label>
+                    <input type="text" [(ngModel)]="paciente.rua" id="rua" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="cep">CEP</label>
+                    <input type="text" [(ngModel)]="paciente.cep" id="cep" class="form-control" mask="00000-000">
+                </div>
+                <div class="form-group">
+                    <label for="bairro">Bairro</label>
+                    <input type="text" [(ngModel)]="paciente.bairro" id="bairro" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="cidade">Cidade</label>
+                    <input type="text" [(ngModel)]="paciente.cidade" id="cidade" class="form-control">
+                </div>
+
+                <button (click)="confirmarCadastro()" class="btn btn-success">Confirmar e Salvar Cadastro</button>
+            </div>
+        </div>
+    </div>
+</div>

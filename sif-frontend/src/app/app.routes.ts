@@ -13,6 +13,7 @@ import { MedicamentoForm } from './pages/medicamento-form/medicamento-form';
 import { roleGuard } from './guards/role-guard';
 import { ProcessoDetail } from './pages/processo-detail/processo-detail';
 import { authGuard } from './guards/auth.guard';
+import { OcrUpload } from './pages/ocr-upload/ocr-upload';
 
 export const routes: Routes = [
   // A rota de login não é protegida
@@ -26,6 +27,7 @@ export const routes: Routes = [
   { path: 'pacientes/:id/editar', component: PacienteForm, canActivate: [authGuard] },
   { path: 'processos/:id', component: ProcessoDetail, canActivate: [authGuard] },
   { path: 'pacientes/:pacienteId/processos/novo', component: ProcessoForm, canActivate: [authGuard] },
+  { path: 'ocr-upload', component: OcrUpload, canActivate: [authGuard] },
   
   // --- ROTAS PROTEGIDAS PELO LOGIN E PELO PERFIL ---
   {
